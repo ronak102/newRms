@@ -3,22 +3,27 @@
 //var serviceURL = "http://192.168.2.109/rms-services/EmployeeDirectoryJQM/services/";
 
 var citys;
-//function onload1(){
-//    alert("onload");
-
-$('#index').bind('pageinit', function(event) {
+function onload1()
+{    
+    alert("onload");
     $.mobile.allowCrossDomainPages = true;
     getCityList();
-});
-    
+}
+
+//$('#area').bind('pageinit', function(event) {
+//    $.mobile.allowCrossDomainPages = true;
+//    getCityList();
+//    
+//});
+ 
 //}
 //alert(serviceURL + 'restaurants');
 function getCityList() {
-//    alert("call getCityList");
+    //    alert("call getCityList");
     $.get(serviceURL + 'city', function(data) {
         $('#cityList li').remove();
         citys = eval('(' + data + ')');
-//        alert(citys.length);
+        //        alert(citys.length);
                   
         $.each(citys, function(index, city) {                    
             $('#cityList').append('<li  cityName="'+city.city+'" cityId="'+city.id+'"><a href="#">' + city.city +'</li>');            
