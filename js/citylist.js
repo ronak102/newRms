@@ -7,6 +7,7 @@ function onload1()
 {    
     alert("onload");
     $.mobile.allowCrossDomainPages = true;
+    $.support.cors = true;
     getCityList();
 }
 
@@ -20,25 +21,52 @@ function onload1()
 //alert(serviceURL + 'restaurants');
 function getCityList() {
     //    alert("call getCityList");
-    $.get(serviceURL + 'city', function(data) {
-        $('#cityList li').remove();
-        citys = eval('(' + data + ')');
-        //        alert(citys.length);
-                  
-        $.each(citys, function(index, city) {                    
-            $('#cityList').append('<li  cityName="'+city.city+'" cityId="'+city.id+'"><a href="#">' + city.city +'</li>');            
-        });
+    $.ajax({
+        url: serviceURL + 'city',                
+        crossDomain: true,
+        type: 'GET',
+        dataType: 'json',
+        error: function(x, textStatus, errorThrown){
+            alert(x + "  " + textStatus + "  " + errorThrown);     
+        },
+        success: function(data){
+            //             debug("data::"+JSON.stringify(data),2);
+                    
+            alert(data.length);
+            citys = data;
+            $.each(citys, function(index, city) {                    
+                $('#cityList').append('<li  cityName="'+city.city+'" cityId="'+city.id+'"><a href="#">' + city.city +'</li>');            
+            });
 
-        $('#cityList li').click(function(){
-            //alert($(this).attr("cityId"));
-            $('#mypanel').panel("close");
-            $('#cityName').html($(this).attr("cityName"));//to replace other html containt
-            $("#otherLocation").attr("href","area.html?id="+$(this).attr("cityId"));
+            $('#cityList li').click(function(){
+                //alert($(this).attr("cityId"));
+                $('#mypanel').panel("close");
+                $('#cityName').html($(this).attr("cityName"));//to replace other html containt
+                $("#otherLocation").attr("href","area.html?id="+$(this).attr("cityId"));
             
-        });
-        
-        $('#cityList').listview('refresh');
-    });
+            });
+            $('#cityList').listview('refresh');
+        }
+    });       
+//    $.get(serviceURL + 'city', function(data) {
+//        $('#cityList li').remove();
+//        citys = eval('(' + data + ')');
+//        //        alert(citys.length);
+//                  
+//        $.each(citys, function(index, city) {                    
+//            $('#cityList').append('<li  cityName="'+city.city+'" cityId="'+city.id+'"><a href="#">' + city.city +'</li>');            
+//        });
+//
+//        $('#cityList li').click(function(){
+//            //alert($(this).attr("cityId"));
+//            $('#mypanel').panel("close");
+//            $('#cityName').html($(this).attr("cityName"));//to replace other html containt
+//            $("#otherLocation").attr("href","area.html?id="+$(this).attr("cityId"));
+//            
+//        });
+//        
+//        $('#cityList').listview('refresh');
+//    });
 }
 
 //$('#cityList li').live('click', function() {
