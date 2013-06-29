@@ -27,7 +27,8 @@ function getCityList() {
         type: 'GET',
         dataType: 'json',
         error: function(x, textStatus, errorThrown){
-            alert(x + "  " + textStatus + "  " + errorThrown);     
+//            console.log( JSON.stringify(x));     
+            alert(JSON.stringify(x) + "  " + textStatus + "  " + errorThrown);     
         },
         success: function(data){
             //             debug("data::"+JSON.stringify(data),2);
