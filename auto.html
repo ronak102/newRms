@@ -1,0 +1,87 @@
+<!DOCTYPE html> 
+<html> 
+    <head> 
+        <title>My Page</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1"> 
+        <link rel="stylesheet" href="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.css" />
+        <script src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
+        <script src="http://code.jquery.com/mobile/1.2.1/jquery.mobile-1.2.1.min.js"></script>
+        <style>
+             
+ 	
+.ui-listview-filter-inset {
+    margin-top: 0;
+}
+        </style>
+    </head> 
+
+
+
+    <body> 
+        <div data-role="page" id="index">
+
+            <div data-role="header">
+                <a href="home.html" data-role="button" data-icon="home" data-iconpos="notext" data-ajax="false">Home</a>
+                <h1>Home</h1> 
+            </div> 
+
+            <div data-role="containt">
+
+                <h3>Cities worldwide</h3>
+                <p>After you enter <strong>at least three characters</strong> the autocomplete function will show all possible matches.</p>
+                <ul id="autocomplete" data-role="listview" data-inset="true" data-filter="true" data-filter-placeholder="Find a city..." data-filter-theme="d"></ul>
+                <h1>OR</h1>
+            </div><!--contain-->
+
+
+            <div data-role="footer" data-position="fixed">		
+                <div data-role="navbar" data-inset="true">
+                    <ul>
+                        <li><a href="#" data-ajax="false">Search</a></li>
+                        <li><a href="#" data-ajax="false">About</a></li>
+                        <li><a href="#" data-ajax="false">Contect us</a></li>
+                    </ul>
+                </div><!-- /navbar -->
+            </div><!-- /footer -->
+
+
+        </div><!--Page-->
+
+        <script>
+ var serviceURL = "http://192.168.2.129/rms-services/api/";
+	
+$( document ).on( "pageinit", "#index", function() {
+    $( "#autocomplete" ).on( "listviewbeforefilter", function ( e, data ) {
+        var $ul = $( this ),
+            $input = $( data.input ),
+            value = $input.val(),
+            html = "";
+        $ul.html( "" );
+        if ( value && value.length > 2 ) {
+            $ul.html( "<li><div class='ui-loader'><span class='ui-icon ui-icon-loading'></span></div></li>" );
+            $ul.listview( "refresh" );
+            $.ajax({
+                url: serviceURL + 'city',
+                dataType: "json",
+                crossDomain: true,
+                data: {
+                    q: $input.val()
+                }
+            })
+            .then( function ( response ) {
+                $.each( response, function ( i, val ) {
+                    html += "<li><a href='#'>" + val.city + "</a></li>";
+                });
+                $ul.html( html );
+                $ul.listview( "refresh" );
+                $ul.trigger( "updatelayout");
+            });
+        }
+    });
+});
+ 
+
+        </script>
+
+    </body>
+</html>
