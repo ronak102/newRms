@@ -3,6 +3,7 @@ var id = getUrlVars()["id"];
 var areas;
 
 $('#area').bind('pageinit', function(event) {
+    $.mobile.allowCrossDomainPages = true;
     getAreaCityList();
 });
 
