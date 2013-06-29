@@ -14,14 +14,13 @@ function onload1(){
 //alert(serviceURL + 'restaurants');
 function getCityList() {
     alert("call getCityList");
-    $.getJSON(serviceURL + 'city', function(data) {
-        alert(data.length);
+    $.get(serviceURL + 'city', function(data) {
         $('#cityList li').remove();
-        citys = data;
+        citys = eval('(' + data + ')');
+        alert(citys.length);
                   
         $.each(citys, function(index, city) {                    
-            $('#cityList').append('<li  cityName="'+city.city+'" cityId="'+city.id+'"><a href="#">' + city.city +'</li>');
-            
+            $('#cityList').append('<li  cityName="'+city.city+'" cityId="'+city.id+'"><a href="#">' + city.city +'</li>');            
         });
 
         $('#cityList li').click(function(){
