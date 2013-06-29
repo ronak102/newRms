@@ -3,18 +3,18 @@
 //var serviceURL = "http://192.168.2.109/rms-services/EmployeeDirectoryJQM/services/";
 
 var citys;
-function onload1()
-{    
-    alert("onload");
-    
-    getCityList();
-}
-
-//$('#area').bind('pageinit', function(event) {
-//    $.mobile.allowCrossDomainPages = true;
-//    getCityList();
+//function onload1()
+//{    
+//    alert("onload");
 //    
-//});
+//    getCityList();
+//}
+
+$('#area').bind('pageinit', function(event) {
+   
+    getCityList();
+    
+});
  
 //}
 //alert(serviceURL + 'restaurants');
